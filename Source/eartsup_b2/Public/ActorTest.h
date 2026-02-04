@@ -14,10 +14,13 @@ class EARTSUP_B2_API AActorTest : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AActorTest();
+	
+
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame
