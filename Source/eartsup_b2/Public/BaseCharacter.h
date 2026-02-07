@@ -25,17 +25,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int Armor;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* Mesh;
-
-	UPROPERTY()
-	UBoxComponent* Box;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -47,10 +41,4 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	bool ReceiveDamage(int DamageAmount);
-
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
-		AActor* OtherActor, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep,
-		const FHitResult& SweepResult);
 };
