@@ -9,12 +9,6 @@ ABaseCharacter::ABaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
-
-	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
-	Box->SetupAttachment(Mesh);
 }
 
 // Called when the game starts or when spawned
@@ -22,8 +16,6 @@ void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Box->OnComponentBeginOverlap.AddDynamic(this,
-		&ABaseCharacter::OnOverlapBegin);
 }
 
 // Called every frame
@@ -53,14 +45,7 @@ bool ABaseCharacter::ReceiveDamage(int DamageAmount)
 	{
 		CurrentHP -= EffectiveDamage;
 	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
+		FString::Printf(TEXT("Player received %d damage, current HP: %d"), EffectiveDamage, CurrentHP));
 	return true;
 }
-
-void OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
-	AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex, bool bFromSweep,
-	const FHitResult& SweepResult)
-{
-	//Overlap Logic
-}
-
