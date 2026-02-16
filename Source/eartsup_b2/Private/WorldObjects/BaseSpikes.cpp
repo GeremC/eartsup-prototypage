@@ -10,11 +10,11 @@ ABaseSpikes::ABaseSpikes()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SpikeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpikeMesh"));
-	RootComponent = SpikeMesh;
-
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	CollisionBox->SetupAttachment(RootComponent);
+	RootComponent = CollisionBox;
+
+	SpikeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpikeMesh"));
+	SpikeMesh->SetupAttachment(CollisionBox);
 
 
 }
@@ -40,8 +40,13 @@ void ABaseSpikes::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
                                  AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
                                  bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->IsA(ABaseCharacter::StaticClass()))
+	OnActivation(OtherActor);
+}
+
+void ABaseSpikes::OnActivation(AActor* Actor)
+{
+	if (Actor->IsA(ABaseCharacter::StaticClass()))
 	{
-		Cast<ABaseCharacter>(OtherActor)->ReceiveDamage(SpikeDamage);
+		Cast<ABaseCharacter>(Actor)->ReceiveDamage(SpikeDamage);
 	}
 }

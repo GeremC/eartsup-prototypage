@@ -39,6 +39,7 @@ bool ABaseCharacter::ReceiveDamage(int DamageAmount)
 	if (CurrentHP - EffectiveDamage < 0)
 	{
 		CurrentHP = 0;
+		Destroy();
 		return false;
 	}
 	else
@@ -46,7 +47,7 @@ bool ABaseCharacter::ReceiveDamage(int DamageAmount)
 		CurrentHP -= EffectiveDamage;
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
-		FString::Printf(TEXT("Player received %d damage, current HP: %d"), EffectiveDamage, CurrentHP));
+		FString::Printf(TEXT("Actor received %d damage, current HP: %d"), EffectiveDamage, CurrentHP));
 	return true;
 }
 
